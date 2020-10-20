@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<Employee.Models.Employees>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Employee Register";
 }
 
-<h2>Index</h2>
+<h2>Employee Register</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -24,7 +22,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.OfficeLocation)
             </th>
-            <th></th>
+            <th>
+                    <a asp-action="Create">Tambah Employee</a>
+                
+            </th>
         </tr>
     </thead>
     <tbody>
