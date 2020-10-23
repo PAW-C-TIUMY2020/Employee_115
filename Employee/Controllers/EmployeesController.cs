@@ -43,9 +43,9 @@ namespace Employee.Controllers
         }
 
         // GET: Employees/Create
-        public IActionResult Create()
+        public IActionResult AddorEdit(int id=0)
         {
-            return View();
+            return View(new Employees());
         }
 
         // POST: Employees/Create
@@ -53,7 +53,7 @@ namespace Employee.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,FullName,EmpCode,Position,OfficeLocation")] Employees employees)
+        public async Task<IActionResult> AddorEdit([Bind("EmployeeId,FullName,EmpCode,Position,OfficeLocation")] Employees employees)
         {
             if (ModelState.IsValid)
             {
@@ -118,19 +118,10 @@ namespace Employee.Controllers
         // GET: Employees/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var employees = await _context.Employees
-                .FirstOrDefaultAsync(m => m.EmployeeId == id);
-            if (employees == null)
-            {
-                return NotFound();
-            }
-
-            return View(employees);
+            var employees = await _context.Employees.FindAsync(id);
+            _context.Employees.Remove(employees);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Employees/Delete/5
